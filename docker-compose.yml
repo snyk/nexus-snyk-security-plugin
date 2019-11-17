@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+
+  nexus:
+    image: sonatype/nexus3:3.19.1
+    ports:
+      - "8081:8081"
+    volumes:
+      - "./.nexus/deploy:/opt/sonatype/nexus/deploy"
+      - "./.nexus/data:/nexus-data"
