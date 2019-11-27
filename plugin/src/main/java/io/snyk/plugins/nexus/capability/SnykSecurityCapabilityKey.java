@@ -1,20 +1,26 @@
 package io.snyk.plugins.nexus.capability;
 
 public enum SnykSecurityCapabilityKey {
-  API_URL("snyk.api.url"),
-  API_TOKEN("snyk.api.token"),
-  ORGANIZATION_ID("snyk.organization.id"),
-  VULNERABILITY_THRESHOLD("snyk.scanner.vulnerability.threshold"),
-  LICENSE_THRESHOLD("snyk.scanner.license.threshold"),
-  ;
+  API_URL("snyk.api.url", "https://snyk.io/api/v1/"),
+  API_TOKEN("snyk.api.token", ""),
+  API_TRUST_ALL_CERTIFICATES("snyk.api.trust.all.certificates", "false"),
+  ORGANIZATION_ID("snyk.organization.id", ""),
+  VULNERABILITY_THRESHOLD("snyk.scanner.vulnerability.threshold", "low"),
+  LICENSE_THRESHOLD("snyk.scanner.license.threshold", "low");
 
   private final String propertyKey;
+  private final String defaultValue;
 
-  SnykSecurityCapabilityKey(String propertyKey) {
+  SnykSecurityCapabilityKey(String propertyKey, String defaultValue) {
     this.propertyKey = propertyKey;
+    this.defaultValue = defaultValue;
   }
 
   public String propertyKey() {
     return propertyKey;
+  }
+
+  public String defaultValue() {
+    return defaultValue;
   }
 }

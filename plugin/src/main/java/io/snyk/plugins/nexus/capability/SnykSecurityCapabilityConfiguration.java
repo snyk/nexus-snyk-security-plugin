@@ -17,12 +17,12 @@ public class SnykSecurityCapabilityConfiguration extends CapabilityConfiguration
   private String vulnerabilityThreshold;
   private String licenseThreshold;
 
-  public SnykSecurityCapabilityConfiguration(Map<String, String> properties) {
-    apiUrl = properties.getOrDefault(API_URL.propertyKey(), "https://snyk.io/api/v1/");
+  SnykSecurityCapabilityConfiguration(Map<String, String> properties) {
+    apiUrl = properties.getOrDefault(API_URL.propertyKey(), API_URL.defaultValue());
     apiToken = properties.get(API_TOKEN.propertyKey());
     organizationId = properties.get(ORGANIZATION_ID.propertyKey());
-    vulnerabilityThreshold = properties.getOrDefault(VULNERABILITY_THRESHOLD.propertyKey(), "low");
-    licenseThreshold = properties.getOrDefault(LICENSE_THRESHOLD.propertyKey(), "low");
+    vulnerabilityThreshold = properties.getOrDefault(VULNERABILITY_THRESHOLD.propertyKey(), VULNERABILITY_THRESHOLD.defaultValue());
+    licenseThreshold = properties.getOrDefault(LICENSE_THRESHOLD.propertyKey(), LICENSE_THRESHOLD.defaultValue());
 
   }
 
