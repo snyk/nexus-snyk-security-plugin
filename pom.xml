@@ -26,6 +26,13 @@
     <!-- will be overridden in CD pipeline -->
     <revision>LOCAL-SNAPSHOT</revision>
 
+    <!--
+     | dependency and plugin versions, please keep alphabetical.
+     | each version property should be of the form "version.<identifier>".
+    -->
+    <version.jsr305.annotations>3.0.2</version.jsr305.annotations>
+    <version.junit5>5.4.2</version.junit5>
+    <version.retrofit2>2.6.0</version.retrofit2>
   </properties>
 
   <build>
@@ -42,8 +49,39 @@
     </plugins>
   </build>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>${version.jsr305.annotations}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.retrofit2</groupId>
+        <artifactId>converter-jackson</artifactId>
+        <version>${version.retrofit2}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.retrofit2</groupId>
+        <artifactId>retrofit</artifactId>
+        <version>${version.retrofit2}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${version.junit5}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${version.junit5}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <modules>
     <module>plugin</module>
+    <module>snyk-sdk</module>
   </modules>
 
   <repositories>

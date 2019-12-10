@@ -16,6 +16,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.snyk</groupId>
+      <artifactId>sdk</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>org.sonatype.nexus</groupId>
       <artifactId>nexus-capability</artifactId>
       <scope>provided</scope>
@@ -45,6 +50,11 @@
       <artifactId>nexus-security</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-repository-maven</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -71,7 +81,11 @@
             <Import-Package>
               io.snyk.plugins.nexus,
               io.snyk.plugins.nexus.capability,
+              io.snyk.plugins.nexus.scanner,
+              com.fasterxml.jackson.*,
               javax.inject,
+              javax.net,
+              javax.net.ssl,
               org.slf4j,
               org.osgi.framework,
               org.sonatype.nexus.*
