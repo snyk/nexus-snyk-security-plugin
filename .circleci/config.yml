@@ -1,13 +1,12 @@
 version: 2.1
+
 jobs:
   build:
     docker:
       - image: circleci/openjdk:8-jdk
     working_directory: ~/nexus-snyk-security-plugin
-
     environment:
       MAVEN_OPTS: -Xmx3200m
-
     steps:
       - checkout
       - restore_cache:
@@ -17,8 +16,70 @@ jobs:
       - run:
           name: Run tests
           command: |
-            ./mvnw clean verify
+            ./mvnw clean verify --show-version --batch-mode --errors
       - save_cache:
           paths:
             - ~/.m2
           key: maven-dependencies-{{ checksum "pom.xml" }}
+
+  release:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/nexus-snyk-security-plugin
+    environment:
+      MAVEN_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-dependencies-{{ checksum "pom.xml" }}
+            - maven-dependencies-
+      - run:
+          name: Build release binaries
+          command: |
+            ./mvnw clean verify --show-version --batch-mode --errors -PbuildKar -Drevision=${CIRCLE_TAG}
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-dependencies-{{ checksum "pom.xml" }}
+      - persist_to_workspace:
+          root: ~/nexus-snyk-security-plugin
+          paths:
+            - "*"
+
+  publish-release-on-github:
+    docker:
+      - image: circleci/golang:1.13
+    working_directory: ~/nexus-snyk-security-plugin
+    steps:
+      - attach_workspace:
+          at: ~/nexus-snyk-security-plugin
+      - run:
+          name: Publish release on GitHub
+          command: |
+            go get github.com/aktau/github-release
+            github-release upload --security-token $GH_TOKEN --user ${CIRCLE_PROJECT_USERNAME} --repo ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_TAG} --name nexus-snyk-security-plugin-bundle.kar --file ./plugin/target/nexus-snyk-security-plugin-bundle.kar
+
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - publish-release-on-github:
+          requires:
+            - release
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
