@@ -23,7 +23,7 @@ public class SnykSecurityCapabilityLocator {
 
   public SnykSecurityCapabilityConfiguration getSnykSecurityCapabilityConfiguration() {
     CapabilityReference reference = capabilityRegistry.getAll().stream()
-                                                      .filter(e -> e.capability().getClass().isInstance(SnykSecurityCapability.class))
+                                                      .filter(e -> SnykSecurityCapability.class.getSimpleName().equals(e.capability().getClass().getSimpleName()))
                                                       .findFirst().orElse(null);
     if (reference == null) {
       LOG.debug("Snyk Security Configuration capability not created.");
