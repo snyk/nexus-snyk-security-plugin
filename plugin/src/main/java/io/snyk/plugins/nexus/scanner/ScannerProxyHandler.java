@@ -29,11 +29,7 @@ public class ScannerProxyHandler extends ProxyHandler {
       return response;
     }
 
-    try {
-      scannerModule.get().scanComponent(context);
-    } catch (Exception ex) {
-      LOG.error("Could not scan component", ex);
-    }
+    scannerModule.get().scanComponent(context);
     return response;
   }
 }

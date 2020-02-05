@@ -24,7 +24,6 @@ import org.sonatype.nexus.repository.storage.AssetStore;
 import org.sonatype.nexus.repository.storage.Component;
 import org.sonatype.nexus.repository.storage.ComponentStore;
 import org.sonatype.nexus.repository.view.Context;
-import org.sonatype.nexus.transaction.Transactional;
 
 import static java.lang.String.format;
 
@@ -50,68 +49,58 @@ public class ScannerModule {
   private SnykSecurityCapabilityConfiguration configuration;
 
   void scanComponent(@Nonnull Context context) {
+    TestResult testResult = null;
+    try {
+      initializeModuleIfNeeded();
+
+      LOG.debug("Scanning component: {}", context.getRequest().getPath());
+      MavenPath.Coordinates coordinates = null;
+
+      Object mavenPathAttribute = context.getAttributes().get(MavenPath.class.getName());
+      if (mavenPathAttribute instanceof MavenPath) {
+        //TODO(pavel): move logic to maven subpackage
+        MavenPath mavenPath = (MavenPath) mavenPathAttribute;
+        MavenPath parsedMavenPath = mavenPathParser.parsePath(mavenPath.getPath());
+
+        coordinates = parsedMavenPath.getCoordinates();
+        if (coordinates == null) {
+          LOG.warn("Coordinates are null for {}", parsedMavenPath);
+        } else {
+          if ("jar".equals(coordinates.getExtension())) {
+            testResult = mavenScanner.scan(coordinates, snykClient, configuration.getOrganizationId());
+          } else {
+            LOG.debug("Extension is not supported: {}", mavenPath.getPath());
+          }
+        }
+      }
+
+      if (testResult == null) {
+        LOG.warn("Component could not be scanned, check the logs scanner modules: {}", context.getRequest().getPath());
+        return;
+      }
+
+      updateAssetAttributes(testResult, coordinates, context);
+    } catch (Exception ex) {
+      LOG.error("Could not scan component", ex);
+    }
+    validateVulnerabilityIssues(testResult, context.getRequest().getPath());
+    validateLicenseIssues(testResult, context.getRequest().getPath());
+  }
+
+  private void initializeModuleIfNeeded() {
     if (snykClient == null) {
       snykClient = configurationHelper.getSnykClient();
     }
     if (configuration == null) {
       configuration = configurationHelper.getConfiguration();
     }
-
-    String vulnerabilityThreshold = configuration.getVulnerabilityThreshold();
-    if ("none".equals(vulnerabilityThreshold)) {
-      LOG.warn("No scan needed");
-      return;
-    }
-
-    LOG.debug("Scanning component: {}", context.getRequest().getPath());
-
-    TestResult testResult = null;
-    MavenPath.Coordinates coordinates = null;
-
-    Object mavenPathAttribute = context.getAttributes().get(MavenPath.class.getName());
-    if (mavenPathAttribute instanceof MavenPath) {
-      MavenPath mavenPath = (MavenPath) mavenPathAttribute;
-      MavenPath parsedMavenPath = mavenPathParser.parsePath(mavenPath.getPath());
-
-      coordinates = parsedMavenPath.getCoordinates();
-      if (coordinates == null) {
-        LOG.warn("Coordinates are null for {}", parsedMavenPath);
-      } else {
-        if ("jar".equals(coordinates.getExtension())) {
-          testResult = mavenScanner.scan(coordinates, snykClient, configuration.getOrganizationId());
-        } else {
-          LOG.warn("Extension is not supported: {}", mavenPath.getPath());
-        }
-      }
-    }
-
-    if (testResult == null) {
-      LOG.warn("We could not scan component");
-      return;
-    }
-
-    LOG.info("Vulnerabilities all: {}", testResult.issues.vulnerabilities.size());
-    LOG.info("Licenses all: {}", testResult.issues.licenses.size());
-
-    LOG.warn("Adding metadata here...");
-    addMetadata(testResult, coordinates, context);
-
-    LOG.warn("Validate findings...");
-    if (!testResult.issues.vulnerabilities.isEmpty()) {
-      throw new RuntimeException(format("Asset '%s' has vulnerabilities: %s", context.getRequest().getPath(), getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
-    }
   }
 
-  private void addMetadata(TestResult testResult, MavenPath.Coordinates coordinates, @Nonnull Context context) {
-    if (testResult == null) {
-      return;
-    }
-
+  private void updateAssetAttributes(@Nonnull TestResult testResult, MavenPath.Coordinates coordinates, @Nonnull Context context) {
     HashMap<String, String> filter = new HashMap<>(1);
     filter.put("version", coordinates.getVersion());
-    List<Component> components = componentStore.getAllMatchingComponents(context.getRepository(), coordinates.getGroupId(), coordinates.getArtifactId(), filter);
-    Component component = components.get(0);
-
+    List<Component> matchingComponents = componentStore.getAllMatchingComponents(context.getRepository(), coordinates.getGroupId(), coordinates.getArtifactId(), filter);
+    Component component = (matchingComponents != null && !matchingComponents.isEmpty()) ? matchingComponents.get(0) : null;
     BrowseResult<Asset> assetBrowseResult = browseService.browseComponentAssets(context.getRepository(), component);
     Asset asset = assetBrowseResult.getResults().stream()
                                    .filter(e -> "application/java-archive".equals(e.contentType()))
@@ -141,5 +130,73 @@ public class ScannerModule {
     long countLowSeverities = issues.stream().filter(issue -> issue.severity == Severity.LOW).count();
 
     return format("%d high, %d medium, %d low", countHighSeverities, countMediumSeverities, countLowSeverities);
+  }
+
+  private void validateVulnerabilityIssues(TestResult testResult, @Nonnull String path) {
+    if (testResult == null) {
+      LOG.warn("Component could not be scanned, check the logs scanner modules: {}", path);
+      return;
+    }
+
+    String vulnerabilityThreshold = configuration.getVulnerabilityThreshold();
+
+    if ("none".equals(vulnerabilityThreshold)) {
+      LOG.info("Property 'Vulnerability Threshold' is none, so we allow to download artifact.");
+      return;
+    }
+
+    if ("low".equals(vulnerabilityThreshold)) {
+      if (!testResult.issues.vulnerabilities.isEmpty()) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+      }
+    } else if ("medium".equals(vulnerabilityThreshold)) {
+      long count = testResult.issues.vulnerabilities.stream()
+                                                    .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
+                                                    .count();
+      if (count > 0) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+      }
+    } else if ("high".equals(vulnerabilityThreshold)) {
+      long count = testResult.issues.vulnerabilities.stream()
+                                                    .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
+                                                    .count();
+      if (count > 0) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+      }
+    }
+  }
+
+  private void validateLicenseIssues(TestResult testResult, @Nonnull String path) {
+    if (testResult == null) {
+      LOG.warn("Component could not be scanned, check the logs scanner modules: {}", path);
+      return;
+    }
+
+    String licenseThreshold = configuration.getLicenseThreshold();
+
+    if ("none".equals(licenseThreshold)) {
+      LOG.info("Property 'License Threshold' is none, so we allow to download artifact.");
+      return;
+    }
+
+    if ("low".equals(licenseThreshold)) {
+      if (!testResult.issues.licenses.isEmpty()) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+      }
+    } else if ("medium".equals(licenseThreshold)) {
+      long count = testResult.issues.licenses.stream()
+                                             .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
+                                             .count();
+      if (count > 0) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+      }
+    } else if ("high".equals(licenseThreshold)) {
+      long count = testResult.issues.licenses.stream()
+                                             .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
+                                             .count();
+      if (count > 0) {
+        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+      }
+    }
   }
 }
