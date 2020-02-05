@@ -2,7 +2,6 @@ package io.snyk.plugins.nexus.capability;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,6 @@ import org.sonatype.nexus.capability.CapabilityReference;
 import org.sonatype.nexus.capability.CapabilityRegistry;
 
 @Named
-@Singleton
 public class SnykSecurityCapabilityLocator {
   private static final Logger LOG = LoggerFactory.getLogger(SnykSecurityCapabilityLocator.class);
 
