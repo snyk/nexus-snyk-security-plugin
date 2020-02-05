@@ -147,21 +147,21 @@ public class ScannerModule {
 
     if ("low".equals(vulnerabilityThreshold)) {
       if (!testResult.issues.vulnerabilities.isEmpty()) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
       }
     } else if ("medium".equals(vulnerabilityThreshold)) {
       long count = testResult.issues.vulnerabilities.stream()
                                                     .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
                                                     .count();
       if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
       }
     } else if ("high".equals(vulnerabilityThreshold)) {
       long count = testResult.issues.vulnerabilities.stream()
                                                     .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
                                                     .count();
       if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
+        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
       }
     }
   }
@@ -181,21 +181,21 @@ public class ScannerModule {
 
     if ("low".equals(licenseThreshold)) {
       if (!testResult.issues.licenses.isEmpty()) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
       }
     } else if ("medium".equals(licenseThreshold)) {
       long count = testResult.issues.licenses.stream()
                                              .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
                                              .count();
       if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
       }
     } else if ("high".equals(licenseThreshold)) {
       long count = testResult.issues.licenses.stream()
                                              .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
                                              .count();
       if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerabilities: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
+        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
       }
     }
   }
