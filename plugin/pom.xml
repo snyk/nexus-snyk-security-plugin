@@ -19,6 +19,7 @@
       <groupId>io.snyk</groupId>
       <artifactId>sdk</artifactId>
       <version>${revision}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.sonatype.nexus</groupId>
@@ -78,10 +79,18 @@
             <Bundle-Description>nexus-snyk-security-plugin</Bundle-Description>
             <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
             <Embed-Transitive>true</Embed-Transitive>
+            <Export-Package>
+              io.snyk.sdk.api.v1,
+              io.snyk.sdk.model,
+              retrofit2,
+              retrofit2.http,
+              okhttp3,
+              okio
+            </Export-Package>
             <Import-Package>
-              io.snyk.plugins.nexus,
-              io.snyk.plugins.nexus.capability,
-              io.snyk.plugins.nexus.scanner,
+              io.snyk.sdk.model,
+              retrofit2,
+              retrofit2.http,
               com.fasterxml.jackson.*,
               javax.inject,
               javax.net,
