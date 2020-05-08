@@ -40,10 +40,10 @@ public class SnykSecurityCapabilityDescriptor extends CapabilityDescriptorSuppor
   public SnykSecurityCapabilityDescriptor() {
     fieldApiUrl = new StringTextFormField(API_URL.propertyKey(), "Snyk API URL", "", FormField.MANDATORY).withInitialValue(API_URL.defaultValue());
     fieldApiToken = new StringTextFormField(API_TOKEN.propertyKey(), "Snyk API Token", "", FormField.MANDATORY).withInitialValue(API_TOKEN.defaultValue());
-    fieldUseCustomSSLCertificate = new CheckboxFormField(API_TRUST_ALL_CERTIFICATES.propertyKey(), "Use custom SSL certificate", "", FormField.OPTIONAL).withInitialValue(false);
     fieldOrganizationId = new StringTextFormField(ORGANIZATION_ID.propertyKey(), "Snyk Organization ID", "", FormField.MANDATORY).withInitialValue(ORGANIZATION_ID.defaultValue());
     fieldVulnerabilityThreshold = new StringTextFormField(VULNERABILITY_THRESHOLD.propertyKey(), "Vulnerability Threshold", "", FormField.MANDATORY).withInitialValue(VULNERABILITY_THRESHOLD.defaultValue());
     fieldLicenseThreshold = new StringTextFormField(LICENSE_THRESHOLD.propertyKey(), "License Threshold", "", FormField.MANDATORY).withInitialValue(LICENSE_THRESHOLD.defaultValue());
+    fieldUseCustomSSLCertificate = new CheckboxFormField(API_TRUST_ALL_CERTIFICATES.propertyKey(), "Advanced: Disable certificate validation for TLS connections. This makes HTTPS connections insecure.", "", FormField.OPTIONAL).withInitialValue(false);    
   }
 
   @Override
