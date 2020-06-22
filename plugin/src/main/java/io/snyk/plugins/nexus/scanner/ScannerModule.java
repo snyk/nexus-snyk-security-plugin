@@ -124,10 +124,14 @@ public class ScannerModule {
     assetStore.save(asset);
   }
 
+  private Long countUniqueIssuesBySeverity(List<? extends Issue> issues, Severity severity) {
+    return issues.stream().filter(issue -> issue.severity == severity).map(issue -> issue.id).distinct().count();
+  }
+
   private String getIssuesAsFormattedString(@Nonnull List<? extends Issue> issues) {
-    long countHighSeverities = issues.stream().filter(issue -> issue.severity == Severity.HIGH).count();
-    long countMediumSeverities = issues.stream().filter(issue -> issue.severity == Severity.MEDIUM).count();
-    long countLowSeverities = issues.stream().filter(issue -> issue.severity == Severity.LOW).count();
+    long countHighSeverities = countUniqueIssuesBySeverity(issues, Severity.HIGH);
+    long countMediumSeverities = countUniqueIssuesBySeverity(issues, Severity.MEDIUM);
+    long countLowSeverities = countUniqueIssuesBySeverity(issues, Severity.LOW);
 
     return format("%d high, %d medium, %d low", countHighSeverities, countMediumSeverities, countLowSeverities);
   }
