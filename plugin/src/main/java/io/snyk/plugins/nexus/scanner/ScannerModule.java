@@ -12,6 +12,7 @@ import io.snyk.sdk.api.v1.SnykClient;
 import io.snyk.sdk.model.Issue;
 import io.snyk.sdk.model.Severity;
 import io.snyk.sdk.model.TestResult;
+import io.snyk.sdk.util.Predicates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.nexus.common.collect.NestedAttributesMap;
@@ -25,6 +26,7 @@ import org.sonatype.nexus.repository.storage.Component;
 import org.sonatype.nexus.repository.storage.ComponentStore;
 import org.sonatype.nexus.repository.view.Context;
 
+import static io.snyk.sdk.util.Predicates.distinctByKey;
 import static java.lang.String.format;
 
 @Named
@@ -125,9 +127,18 @@ public class ScannerModule {
   }
 
   private String getIssuesAsFormattedString(@Nonnull List<? extends Issue> issues) {
-    long countHighSeverities = issues.stream().filter(issue -> issue.severity == Severity.HIGH).count();
-    long countMediumSeverities = issues.stream().filter(issue -> issue.severity == Severity.MEDIUM).count();
-    long countLowSeverities = issues.stream().filter(issue -> issue.severity == Severity.LOW).count();
+    long countHighSeverities = issues.stream()
+                                     .filter(issue -> issue.severity == Severity.HIGH)
+                                     .filter(distinctByKey(issue -> issue.id))
+                                     .count();
+    long countMediumSeverities = issues.stream()
+                                       .filter(issue -> issue.severity == Severity.MEDIUM)
+                                       .filter(distinctByKey(issue -> issue.id))
+                                       .count();
+    long countLowSeverities = issues.stream()
+                                    .filter(issue -> issue.severity == Severity.LOW)
+                                    .filter(distinctByKey(issue -> issue.id))
+                                    .count();
 
     return format("%d high, %d medium, %d low", countHighSeverities, countMediumSeverities, countLowSeverities);
   }
