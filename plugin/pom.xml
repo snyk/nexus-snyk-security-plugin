@@ -56,6 +56,16 @@
       <artifactId>nexus-repository-maven</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-repository-npm</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-repository-pypi</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
