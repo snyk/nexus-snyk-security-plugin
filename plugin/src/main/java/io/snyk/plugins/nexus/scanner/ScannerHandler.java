@@ -33,15 +33,18 @@ public class ScannerHandler implements ContributedHandler {
 
   private final ConfigurationHelper configurationHelper;
   private final MavenScanner mavenScanner;
+  private final NpmScanner npmScanner;
 
   private SnykClient snykClient;
   private SnykSecurityCapabilityConfiguration configuration;
 
   @Inject
   public ScannerHandler(final ConfigurationHelper configurationHelper,
-                        final MavenScanner mavenScanner) {
+                        final MavenScanner mavenScanner,
+                        final NpmScanner npmScanner) {
     this.configurationHelper = configurationHelper;
     this.mavenScanner = mavenScanner;
+    this.npmScanner = npmScanner;
 
     initializeModuleIfNeeded();
   }
@@ -65,10 +68,10 @@ public class ScannerHandler implements ContributedHandler {
         testResult = mavenScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
         break;
       }
-//      case "npm": {
-//        LOG.info("npm repo");
-//        break;
-//      }
+      case "npm": {
+        testResult = npmScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
+        break;
+      }
       default:
         LOG.error("format {} is not supported", repositoryFormat);
         return response;
