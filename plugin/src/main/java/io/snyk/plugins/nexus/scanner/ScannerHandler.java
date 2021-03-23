@@ -6,24 +6,19 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import io.snyk.plugins.nexus.capability.SnykSecurityCapabilityConfiguration;
+import io.snyk.plugins.nexus.model.ScanResult;
 import io.snyk.sdk.api.v1.SnykClient;
-import io.snyk.sdk.model.Severity;
-import io.snyk.sdk.model.TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.nexus.repository.Format;
 import org.sonatype.nexus.repository.Repository;
-import org.sonatype.nexus.repository.Type;
-import org.sonatype.nexus.repository.storage.Asset;
-import org.sonatype.nexus.repository.storage.AssetStore;
 import org.sonatype.nexus.repository.types.ProxyType;
-import org.sonatype.nexus.repository.view.Content;
 import org.sonatype.nexus.repository.view.Context;
 import org.sonatype.nexus.repository.view.Payload;
 import org.sonatype.nexus.repository.view.Response;
 import org.sonatype.nexus.repository.view.handlers.ContributedHandler;
 
-import static io.snyk.sdk.util.Formatter.getIssuesAsFormattedString;
+import static io.snyk.plugins.nexus.util.Formatter.getLicenseIssuesAsFormattedString;
+import static io.snyk.plugins.nexus.util.Formatter.getVulnerabilityIssuesAsFormattedString;
 import static java.lang.String.format;
 
 @Named
@@ -61,15 +56,15 @@ public class ScannerHandler implements ContributedHandler {
       return response;
     }
 
-    TestResult testResult = null;
+    ScanResult scanResult = null;
     String repositoryFormat = repository.getFormat().getValue();
     switch (repositoryFormat) {
       case "maven2": {
-        testResult = mavenScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
+        scanResult = mavenScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
         break;
       }
       case "npm": {
-        testResult = npmScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
+        scanResult = npmScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
         break;
       }
       default:
@@ -77,12 +72,12 @@ public class ScannerHandler implements ContributedHandler {
         return response;
     }
 
-    if (testResult == null) {
+    if (scanResult == null) {
       return response;
     }
 
-    validateVulnerabilityIssues(testResult, context.getRequest().getPath());
-    validateLicenseIssues(testResult, context.getRequest().getPath());
+    validateVulnerabilityIssues(scanResult, context.getRequest().getPath());
+    validateLicenseIssues(scanResult, context.getRequest().getPath());
 
     return response;
   }
@@ -96,8 +91,8 @@ public class ScannerHandler implements ContributedHandler {
     }
   }
 
-  private void validateVulnerabilityIssues(TestResult testResult, @Nonnull String path) {
-    if (testResult == null) {
+  private void validateVulnerabilityIssues(ScanResult scanResult, @Nonnull String path) {
+    if (scanResult == null) {
       LOG.warn("Component could not be scanned, check the logs scanner modules: {}", path);
       return;
     }
@@ -109,29 +104,13 @@ public class ScannerHandler implements ContributedHandler {
       return;
     }
 
-    if ("low".equals(vulnerabilityThreshold)) {
-      if (!testResult.issues.vulnerabilities.isEmpty()) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
-      }
-    } else if ("medium".equals(vulnerabilityThreshold)) {
-      long count = testResult.issues.vulnerabilities.stream()
-                                                    .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
-                                                    .count();
-      if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
-      }
-    } else if ("high".equals(vulnerabilityThreshold)) {
-      long count = testResult.issues.vulnerabilities.stream()
-                                                    .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
-                                                    .count();
-      if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.vulnerabilities)));
-      }
+    if (hasVulnerabilityIssues(scanResult, vulnerabilityThreshold)) {
+      throw new RuntimeException(format("Artifact '%s' has vulnerability issues: '%s'", path, getVulnerabilityIssuesAsFormattedString(scanResult)));
     }
   }
 
-  private void validateLicenseIssues(TestResult testResult, @Nonnull String path) {
-    if (testResult == null) {
+  private void validateLicenseIssues(ScanResult scanResult, @Nonnull String path) {
+    if (scanResult == null) {
       LOG.warn("Component could not be scanned, check the logs scanner modules: {}", path);
       return;
     }
@@ -143,24 +122,48 @@ public class ScannerHandler implements ContributedHandler {
       return;
     }
 
-    if ("low".equals(licenseThreshold)) {
-      if (!testResult.issues.licenses.isEmpty()) {
-        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
-      }
-    } else if ("medium".equals(licenseThreshold)) {
-      long count = testResult.issues.licenses.stream()
-                                             .filter(vulnerability -> vulnerability.severity == Severity.MEDIUM || vulnerability.severity == Severity.HIGH)
-                                             .count();
-      if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
-      }
-    } else if ("high".equals(licenseThreshold)) {
-      long count = testResult.issues.licenses.stream()
-                                             .filter(vulnerability -> vulnerability.severity == Severity.HIGH)
-                                             .count();
-      if (count > 0) {
-        throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getIssuesAsFormattedString(testResult.issues.licenses)));
-      }
+    if (hasLicenseIssues(scanResult, licenseThreshold)) {
+      throw new RuntimeException(format("Artifact '%s' has license issues: '%s'", path, getLicenseIssuesAsFormattedString(scanResult)));
+    }
+  }
+
+  private boolean hasVulnerabilityIssues(ScanResult scanResult, String threshold) {
+    if ("none".equals(threshold)) {
+      LOG.info("Property 'Vulnerability Threshold' is none, so we allow to download artifact.");
+      return false;
+    }
+
+    if ("low".equals(threshold) &&
+      (scanResult.lowVulnerabilityIssueCount > 0 || scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0)) {
+      return true;
+    } else if ("medium".equals(threshold) &&
+      (scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0)) {
+      return true;
+    } else if ("high".equals(threshold) &&
+      (scanResult.highVulnerabilityIssueCount > 0)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private boolean hasLicenseIssues(ScanResult scanResult, String threshold) {
+    if ("none".equals(threshold)) {
+      LOG.info("Property 'License Threshold' is none, so we allow to download artifact.");
+      return false;
+    }
+
+    if ("low".equals(threshold) &&
+      (scanResult.lowLicenseIssueCount > 0 || scanResult.mediumLicenseIssueCount > 0 || scanResult.highLicenseIssueCount > 0)) {
+      return true;
+    } else if ("medium".equals(threshold) &&
+      (scanResult.mediumLicenseIssueCount > 0 || scanResult.highLicenseIssueCount > 0)) {
+      return true;
+    } else if ("high".equals(threshold) &&
+      (scanResult.highLicenseIssueCount > 0)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
