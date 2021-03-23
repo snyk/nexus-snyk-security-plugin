@@ -6,7 +6,9 @@ import javax.inject.Named;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.snyk.plugins.nexus.model.ScanResult;
 import io.snyk.sdk.api.v1.SnykClient;
+import io.snyk.sdk.model.Severity;
 import io.snyk.sdk.model.TestResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,9 @@ import org.sonatype.nexus.repository.view.Context;
 import org.sonatype.nexus.repository.view.Payload;
 import retrofit2.Response;
 
+import static io.snyk.plugins.nexus.util.Formatter.enrichScanResultWithLicenseIssues;
+import static io.snyk.plugins.nexus.util.Formatter.enrichScanResultWithVulnerabilityIssues;
+import static io.snyk.plugins.nexus.util.Formatter.getIssuesCountBySeverity;
 import static io.snyk.sdk.util.Formatter.getIssuesAsFormattedString;
 
 @Named
@@ -31,7 +36,7 @@ public class NpmScanner {
     this.assetStore = assetStore;
   }
 
-  TestResult scan(@Nonnull Context context, Payload payload, SnykClient snykClient, String organizationId) {
+  ScanResult scan(@Nonnull Context context, Payload payload, SnykClient snykClient, String organizationId) {
     if (payload == null) {
       return null;
     }
@@ -65,26 +70,67 @@ public class NpmScanner {
       return null;
     }
 
-    TestResult testResult = null;
-    try {
-      Response<TestResult> response = snykClient.testNpm(packageName,
-                                                         packageVersion,
-                                                         organizationId).execute();
-      if (response.isSuccessful() && response.body() != null) {
-        testResult = response.body();
-        String responseAsText = new ObjectMapper().writeValueAsString(response.body());
-        LOG.debug("testNpm response: {}", responseAsText);
-      }
+    ScanResult scanResult = new ScanResult();
 
-      if (testResult != null) {
-        updateAssetAttributes(testResult, packageName, packageVersion, payload);
-      }
+    if (snykPropertiesExist(payload)) {
+      LOG.debug("NPM artifact {}:{} was already scanned. Skip scanning", packageName, packageVersion);
 
-    } catch (IOException ex) {
-      LOG.error("Cloud not test npm artifact: {}", context.getRequest().getPath(), ex);
+      NestedAttributesMap snykSecurityMap = getSnykSecurityAttributes(payload);
+      // vulnerabilities
+      Object vulnerabilityIssues = snykSecurityMap.get("issues_vulnerabilities");
+      if (vulnerabilityIssues instanceof String) {
+        enrichScanResultWithVulnerabilityIssues(scanResult, (String) vulnerabilityIssues);
+      }
+      // licences
+      Object licenseIssues = snykSecurityMap.get("issues_licenses");
+      if (licenseIssues instanceof String) {
+        enrichScanResultWithLicenseIssues(scanResult, (String) licenseIssues);
+      }
+    } else {
+      TestResult testResult = null;
+      try {
+        Response<TestResult> response = snykClient.testNpm(packageName,
+                                                           packageVersion,
+                                                           organizationId).execute();
+        if (response.isSuccessful() && response.body() != null) {
+          testResult = response.body();
+          String responseAsText = new ObjectMapper().writeValueAsString(response.body());
+          LOG.debug("testNpm response: {}", responseAsText);
+        }
+
+        if (testResult != null) {
+          updateAssetAttributes(testResult, packageName, packageVersion, payload);
+
+          scanResult.highVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.HIGH);
+          scanResult.mediumVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.MEDIUM);
+          scanResult.lowVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.LOW);
+
+          scanResult.highLicenseIssueCount = getIssuesCountBySeverity(testResult.issues.licenses, Severity.HIGH);
+          scanResult.mediumLicenseIssueCount = getIssuesCountBySeverity(testResult.issues.licenses, Severity.MEDIUM);
+          scanResult.lowLicenseIssueCount = getIssuesCountBySeverity(testResult.issues.licenses, Severity.LOW);
+        }
+      } catch (IOException ex) {
+        LOG.error("Cloud not test npm artifact: {}", context.getRequest().getPath(), ex);
+      }
     }
 
-    return testResult;
+    return scanResult;
+  }
+
+  private boolean snykPropertiesExist(Payload payload) {
+    NestedAttributesMap snykSecurityMap = getSnykSecurityAttributes(payload);
+    if (snykSecurityMap == null || snykSecurityMap.isEmpty()) {
+      return false;
+    }
+    Object vulnerabilityIssues = snykSecurityMap.get("issues_vulnerabilities");
+    if (vulnerabilityIssues instanceof String && !((String) vulnerabilityIssues).isEmpty()) {
+      return true;
+    }
+    Object licenseIssues = snykSecurityMap.get("issues_licenses");
+    if (licenseIssues instanceof String && !((String) licenseIssues).isEmpty()) {
+      return true;
+    }
+    return false;
   }
 
   private void updateAssetAttributes(@Nonnull TestResult testResult, @Nonnull String packageName, @Nonnull String packageVersion, Payload payload) {
@@ -107,5 +153,17 @@ public class NpmScanner {
 
       assetStore.save(asset);
     }
+  }
+
+  private NestedAttributesMap getSnykSecurityAttributes(Payload payload) {
+    if (!(payload instanceof Content)) {
+      return null;
+    }
+    Asset asset = ((Content) payload).getAttributes().get(Asset.class);
+    if (asset == null) {
+      return null;
+    }
+
+    return asset.attributes().child("Snyk Security");
   }
 }
