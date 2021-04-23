@@ -48,7 +48,10 @@ public class ScannerHandler implements ContributedHandler {
   @Override
   public Response handle(@Nonnull Context context) throws Exception {
     Response response = context.proceed();
-    Payload payload = response.getPayload();
+    if (!configurationHelper.isCapabilityEnabled()) {
+      LOG.debug("SnykSecurityCapability is not enabled.");
+      return response;
+    }
 
     Repository repository = context.getRepository();
     if (!ProxyType.NAME.equals(repository.getType().getValue())) {
@@ -56,6 +59,7 @@ public class ScannerHandler implements ContributedHandler {
       return response;
     }
 
+    Payload payload = response.getPayload();
     ScanResult scanResult = null;
     String repositoryFormat = repository.getFormat().getValue();
     switch (repositoryFormat) {
