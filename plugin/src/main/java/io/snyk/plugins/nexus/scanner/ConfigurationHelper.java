@@ -48,4 +48,14 @@ public class ConfigurationHelper {
       return locator.getSnykSecurityCapabilityConfiguration();
     }
   }
+
+  public boolean isCapabilityEnabled() {
+    SnykSecurityCapabilityLocator locator = locatorProvider.get();
+
+    if (locator == null) {
+      return false;
+    }
+
+    return locator.isSnykSecurityCapabilityActive();
+  }
 }
