@@ -138,15 +138,19 @@ public class ScannerHandler implements ContributedHandler {
     }
 
     if ("low".equals(threshold) &&
-      (scanResult.lowVulnerabilityIssueCount > 0 || scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0)) {
+      (scanResult.lowVulnerabilityIssueCount > 0 || scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0 || scanResult.criticalVulnerabilityIssueCount > 0)) {
       return true;
     } else if ("medium".equals(threshold) &&
-      (scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0)) {
+      (scanResult.mediumVulnerabilityIssueCount > 0 || scanResult.highVulnerabilityIssueCount > 0 || scanResult.criticalVulnerabilityIssueCount > 0)) {
       return true;
     } else if ("high".equals(threshold) &&
-      (scanResult.highVulnerabilityIssueCount > 0)) {
+      (scanResult.highVulnerabilityIssueCount > 0 || scanResult.criticalVulnerabilityIssueCount > 0)) {
       return true;
-    } else {
+    } else if ("critical".equals(threshold) &&
+      (scanResult.criticalVulnerabilityIssueCount > 0)) {
+      return true;
+    }
+    else {
       return false;
     }
   }
