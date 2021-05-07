@@ -17,6 +17,7 @@ class FormatterTest {
     // then
     Assertions.assertAll(
       () -> {
+        Assertions.assertEquals(0, scanResult.criticalVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.highVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.mediumVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.lowVulnerabilityIssueCount);
@@ -34,9 +35,28 @@ class FormatterTest {
     // then
     Assertions.assertAll(
       () -> {
+        Assertions.assertEquals(0, scanResult.criticalVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.highVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.mediumVulnerabilityIssueCount);
         Assertions.assertEquals(0, scanResult.lowVulnerabilityIssueCount);
+      });
+  }
+
+  @Test
+  void enrichScanResultWithVulnerabilityIssues_WithCritical() {
+    // given
+    ScanResult scanResult = new ScanResult();
+
+    // when
+    Formatter.enrichScanResultWithVulnerabilityIssues(scanResult, "5 critical, 3 high, 14 medium, 2 low");
+
+    // then
+    Assertions.assertAll(
+      () -> {
+        Assertions.assertEquals(5, scanResult.criticalVulnerabilityIssueCount);
+        Assertions.assertEquals(3, scanResult.highVulnerabilityIssueCount);
+        Assertions.assertEquals(14, scanResult.mediumVulnerabilityIssueCount);
+        Assertions.assertEquals(2, scanResult.lowVulnerabilityIssueCount);
       });
   }
 
@@ -46,14 +66,15 @@ class FormatterTest {
     ScanResult scanResult = new ScanResult();
 
     // when
-    Formatter.enrichScanResultWithVulnerabilityIssues(scanResult, "3 high, 14 medium, 2 low");
+    Formatter.enrichScanResultWithVulnerabilityIssues(scanResult, "9 high, 5 medium, 8 low");
 
     // then
     Assertions.assertAll(
       () -> {
-        Assertions.assertEquals(3, scanResult.highVulnerabilityIssueCount);
-        Assertions.assertEquals(14, scanResult.mediumVulnerabilityIssueCount);
-        Assertions.assertEquals(2, scanResult.lowVulnerabilityIssueCount);
+        Assertions.assertEquals(0, scanResult.criticalVulnerabilityIssueCount);
+        Assertions.assertEquals(9, scanResult.highVulnerabilityIssueCount);
+        Assertions.assertEquals(5, scanResult.mediumVulnerabilityIssueCount);
+        Assertions.assertEquals(8, scanResult.lowVulnerabilityIssueCount);
       });
   }
 

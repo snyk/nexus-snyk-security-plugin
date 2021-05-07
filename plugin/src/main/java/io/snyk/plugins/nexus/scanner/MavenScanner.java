@@ -93,6 +93,7 @@ public class MavenScanner {
         if (testResult != null) {
           updateAssetAttributes(testResult, coordinates, payload);
 
+          scanResult.criticalVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.CRITICAL);
           scanResult.highVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.HIGH);
           scanResult.mediumVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.MEDIUM);
           scanResult.lowVulnerabilityIssueCount = getIssuesCountBySeverity(testResult.issues.vulnerabilities, Severity.LOW);

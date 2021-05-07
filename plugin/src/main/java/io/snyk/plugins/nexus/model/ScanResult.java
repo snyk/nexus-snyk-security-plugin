@@ -1,6 +1,7 @@
 package io.snyk.plugins.nexus.model;
 
 public final class ScanResult {
+  public long criticalVulnerabilityIssueCount = 0;
   public long highVulnerabilityIssueCount = 0;
   public long mediumVulnerabilityIssueCount = 0;
   public long lowVulnerabilityIssueCount = 0;

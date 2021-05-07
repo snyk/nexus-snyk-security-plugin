@@ -22,7 +22,7 @@ public final class Formatter {
   }
 
   public static String getVulnerabilityIssuesAsFormattedString(@Nonnull ScanResult scanResult) {
-    return String.format("%d high, %d medium, %d low", scanResult.highVulnerabilityIssueCount, scanResult.mediumVulnerabilityIssueCount, scanResult.lowVulnerabilityIssueCount);
+    return String.format("%d critical, %d high, %d medium, %d low", scanResult.criticalVulnerabilityIssueCount, scanResult.highVulnerabilityIssueCount, scanResult.mediumVulnerabilityIssueCount, scanResult.lowVulnerabilityIssueCount);
   }
 
   public static String getLicenseIssuesAsFormattedString(@Nonnull ScanResult scanResult) {
@@ -34,18 +34,27 @@ public final class Formatter {
       scanResult.lowVulnerabilityIssueCount = 0;
       scanResult.mediumVulnerabilityIssueCount = 0;
       scanResult.highVulnerabilityIssueCount = 0;
+      scanResult.criticalVulnerabilityIssueCount = 0;
       return;
     }
 
     String[] parts = formattedIssues.split(", ");
 
-    String high = parts[0].replace(" high", "");
+    int i = 0;
+    if (parts.length == 4) {
+      String critical = parts[i].replace(" critical", "");
+      scanResult.criticalVulnerabilityIssueCount = Long.parseLong(critical);
+      i++;
+    }
+    String high = parts[i].replace(" high", "");
     scanResult.highVulnerabilityIssueCount = Long.parseLong(high);
+    i++;
 
-    String medium = parts[1].replace(" medium", "");
+    String medium = parts[i].replace(" medium", "");
     scanResult.mediumVulnerabilityIssueCount = Long.parseLong(medium);
+    i++;
 
-    String low = parts[2].replace(" low", "");
+    String low = parts[i].replace(" low", "");
     scanResult.lowVulnerabilityIssueCount = Long.parseLong(low);
   }
 

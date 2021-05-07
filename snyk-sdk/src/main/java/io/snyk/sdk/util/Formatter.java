@@ -12,6 +12,10 @@ import static java.lang.String.format;
 public final class Formatter {
 
   public static String getIssuesAsFormattedString(@Nonnull List<? extends Issue> issues) {
+    long countCriticalSeverities = issues.stream()
+                                          .filter(issue -> issue.severity == Severity.CRITICAL)
+                                          .filter(distinctByKey(issue -> issue.id))
+                                          .count();
     long countHighSeverities = issues.stream()
                                      .filter(issue -> issue.severity == Severity.HIGH)
                                      .filter(distinctByKey(issue -> issue.id))
@@ -25,6 +29,6 @@ public final class Formatter {
                                     .filter(distinctByKey(issue -> issue.id))
                                     .count();
 
-    return format("%d high, %d medium, %d low", countHighSeverities, countMediumSeverities, countLowSeverities);
+    return format("%d critical, %d high, %d medium, %d low", countCriticalSeverities, countHighSeverities, countMediumSeverities, countLowSeverities);
   }
 }
