@@ -66,6 +66,17 @@
             TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
             TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
 
+        - name: Setup npm
+          run: npm install
+
+        - name: Lint Node.js
+          run: npm run lint:formatting
+
+        - name: Run Jest tests against running Nexus
+          run: |
+            export NEXUS_PASS=$(cat /tmp/password)
+            npm run test
+
         - uses: actions/upload-artifact@v2
           if: always()
           with:

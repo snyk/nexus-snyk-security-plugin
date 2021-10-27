@@ -38,3 +38,4 @@ plugin/bin
 .factorypath
 **/cypress/videos
 **/cypress/screenshots
+**/node_modules
