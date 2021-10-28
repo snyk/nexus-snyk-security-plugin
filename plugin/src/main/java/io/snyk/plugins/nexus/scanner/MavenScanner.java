@@ -26,6 +26,7 @@ import static io.snyk.plugins.nexus.util.Formatter.enrichScanResultWithLicenseIs
 import static io.snyk.plugins.nexus.util.Formatter.enrichScanResultWithVulnerabilityIssues;
 import static io.snyk.plugins.nexus.util.Formatter.getIssuesCountBySeverity;
 import static io.snyk.sdk.util.Formatter.getIssuesAsFormattedString;
+import static io.snyk.sdk.util.Formatter.getLicenseIssuesAsFormattedString;
 
 @Named
 public class MavenScanner {
@@ -136,7 +137,7 @@ public class MavenScanner {
       snykSecurityMap.clear();
 
       snykSecurityMap.set("issues_vulnerabilities", getIssuesAsFormattedString(testResult.issues.vulnerabilities));
-      snykSecurityMap.set("issues_licenses", getIssuesAsFormattedString(testResult.issues.licenses));
+      snykSecurityMap.set("issues_licenses", getLicenseIssuesAsFormattedString(testResult.issues.licenses));
       StringBuilder snykIssueUrl = new StringBuilder("https://snyk.io/vuln/");
       snykIssueUrl.append(testResult.packageManager).append(":")
                   .append(coordinates.getGroupId()).append("%3A")
