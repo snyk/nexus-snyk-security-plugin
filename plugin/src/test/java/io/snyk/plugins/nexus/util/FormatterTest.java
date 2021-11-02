@@ -81,6 +81,20 @@ class FormatterTest {
   }
 
   @Test
+  void enrichScanResultWithVulnerabilityIssuesThrowsIfInvalidFormat() {
+    ScanResult scanResult = new ScanResult();
+    RuntimeException e = assertThrows(RuntimeException.class, () -> Formatter.enrichScanResultWithVulnerabilityIssues(scanResult, "10 super, 15 elite, 20 fantastic"));
+    assertEquals(e.getMessage(), "Invalid format for vulnerability issues: 10 super, 15 elite, 20 fantastic");
+  }
+
+  @Test
+  void enrichScanResultWithVulnerabilityIssuesThrowsIfInvalidValues() {
+    ScanResult scanResult = new ScanResult();
+    RuntimeException e = assertThrows(RuntimeException.class, () -> Formatter.enrichScanResultWithVulnerabilityIssues(scanResult, "a critical, b high, c medium, d low"));
+    assertEquals(e.getMessage(), "Invalid format for vulnerability issues: a critical, b high, c medium, d low");
+  }
+
+  @Test
   void enrichScanResultWithLicenseIssues_null() {
     // given
     ScanResult scanResult = new ScanResult();
@@ -151,6 +165,13 @@ class FormatterTest {
     ScanResult scanResult = new ScanResult();
     RuntimeException e = assertThrows(RuntimeException.class, () -> Formatter.enrichScanResultWithLicenseIssues(scanResult, "10 super, 15 elite, 20 fantastic"));
     assertEquals(e.getMessage(), "Invalid format for license issues: 10 super, 15 elite, 20 fantastic");
+  }
+
+  @Test
+  void enrichScanResultWithLicenseIssuesThrowsIfInvalidValues() {
+    ScanResult scanResult = new ScanResult();
+    RuntimeException e = assertThrows(RuntimeException.class, () -> Formatter.enrichScanResultWithLicenseIssues(scanResult, "x critical, y high, 0 medium, z low"));
+    assertEquals(e.getMessage(), "Invalid format for license issues: x critical, y high, 0 medium, z low");
   }
 
 }
