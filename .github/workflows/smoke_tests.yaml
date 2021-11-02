@@ -1,7 +1,9 @@
   name: Smoke Tests
   on:
     push:
-      branches: [test/smoke-tests]
+      branches:
+        - master
+    pull_request:
 
   jobs:
     smoke_tests:
@@ -50,7 +52,7 @@
 
         - name: Wait for Nexus start
           run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/
-          
+
         - name: Wait for API status endpoint
           run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/service/rest/v1/status/writable
 
@@ -80,7 +82,7 @@
         - uses: actions/upload-artifact@v2
           if: always()
           with:
-            name: screenshots 
+            name: screenshots
             path: /home/runner/work/nexus-snyk-security-plugin/nexus-snyk-security-plugin/test/smoke/cypress/screenshots/cypress-test.spec.js/
             retention-days: 1
 
