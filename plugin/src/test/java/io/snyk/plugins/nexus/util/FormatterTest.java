@@ -3,6 +3,8 @@ package io.snyk.plugins.nexus.util;
 import io.snyk.plugins.nexus.model.ScanResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FormatterTest {
 
@@ -126,6 +128,29 @@ class FormatterTest {
         Assertions.assertEquals(0, scanResult.mediumLicenseIssueCount);
         Assertions.assertEquals(25, scanResult.lowLicenseIssueCount);
       });
+  }
+
+  @Test
+  void enrichScanResultWithLicenseIssuesWhenFormattedIssuesContainsCritical() {
+    ScanResult scanResult = new ScanResult();
+
+    // when
+    Formatter.enrichScanResultWithLicenseIssues(scanResult, "6 critical, 10 high, 0 medium, 25 low");
+
+    // then
+    Assertions.assertAll(
+      () -> {
+        Assertions.assertEquals(10, scanResult.highLicenseIssueCount);
+        Assertions.assertEquals(0, scanResult.mediumLicenseIssueCount);
+        Assertions.assertEquals(25, scanResult.lowLicenseIssueCount);
+      });
+  }
+
+  @Test
+  void enrichScanResultWithLicenseIssuesThrowsIfInvalidFormat() {
+    ScanResult scanResult = new ScanResult();
+    RuntimeException e = assertThrows(RuntimeException.class, () -> Formatter.enrichScanResultWithLicenseIssues(scanResult, "10 super, 15 elite, 20 fantastic"));
+    assertEquals(e.getMessage(), "Invalid format for license issues: 10 super, 15 elite, 20 fantastic");
   }
 
 }

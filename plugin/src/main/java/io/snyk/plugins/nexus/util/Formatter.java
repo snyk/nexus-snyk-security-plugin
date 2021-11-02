@@ -7,10 +7,16 @@ import java.util.List;
 import io.snyk.plugins.nexus.model.ScanResult;
 import io.snyk.sdk.model.Issue;
 import io.snyk.sdk.model.Severity;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.snyk.sdk.util.Predicates.distinctByKey;
 
 public final class Formatter {
+
+  private static final Pattern LICENSE_ISSUES_WITH_CRITICAL_REGEX = Pattern.compile("(\\d+) critical, (\\d+) high, (\\d+) medium, (\\d+) low");
+  private static final Pattern LICENSE_ISSUES_WITHOUT_CRITICAL_REGEX = Pattern.compile("(\\d+) high, (\\d+) medium, (\\d+) low");
+
   private Formatter() {
   }
 
@@ -66,15 +72,32 @@ public final class Formatter {
       return;
     }
 
-    String[] parts = formattedIssues.split(", ");
+    Matcher licenseIssuesWithCriticalMatch = LICENSE_ISSUES_WITH_CRITICAL_REGEX.matcher(formattedIssues);
+    if (licenseIssuesWithCriticalMatch.find()) {
+      String high = licenseIssuesWithCriticalMatch.group(2); // group(1) is critical which we don't use for licenses
+      String medium = licenseIssuesWithCriticalMatch.group(3);
+      String low = licenseIssuesWithCriticalMatch.group(4);
 
-    String high = parts[0].replace(" high", "");
-    scanResult.highLicenseIssueCount = Long.parseLong(high);
+      scanResult.highLicenseIssueCount = Long.parseLong(high);
+      scanResult.mediumLicenseIssueCount = Long.parseLong(medium);
+      scanResult.lowLicenseIssueCount = Long.parseLong(low);
 
-    String medium = parts[1].replace(" medium", "");
-    scanResult.mediumLicenseIssueCount = Long.parseLong(medium);
+      return;
+    }
 
-    String low = parts[2].replace(" low", "");
-    scanResult.lowLicenseIssueCount = Long.parseLong(low);
+    Matcher licenseIssuesWithoutCriticalMatch = LICENSE_ISSUES_WITHOUT_CRITICAL_REGEX.matcher(formattedIssues);
+    if (licenseIssuesWithoutCriticalMatch.matches()) {
+      String high = licenseIssuesWithoutCriticalMatch.group(1);
+      String medium = licenseIssuesWithoutCriticalMatch.group(2);
+      String low = licenseIssuesWithoutCriticalMatch.group(3);
+
+      scanResult.highLicenseIssueCount = Long.parseLong(high);
+      scanResult.mediumLicenseIssueCount = Long.parseLong(medium);
+      scanResult.lowLicenseIssueCount = Long.parseLong(low);
+
+      return;
+    }
+
+    throw new RuntimeException(String.format("Invalid format for license issues: %s", formattedIssues));
   }
 }
