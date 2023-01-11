@@ -37,7 +37,7 @@
           run: echo ::set-output name=tag::1.0.0
 
         - name: Install Cypress
-          run: npm install -g cypress
+          run: npm install -g cypress@9.7.0
 
         - name: Build plugin
           env:
