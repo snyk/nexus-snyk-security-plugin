@@ -63,7 +63,7 @@
             export NEXUS_PASS=$(cat /tmp/password)
             echo $NEXUS_PASS
             cat /tmp/password
-            cypress run
+            cypress run --headless
           env:
             TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
             TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
