@@ -4,6 +4,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.security.SecureRandom;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.snyk.sdk.api.v1.SnykClient;
 import io.snyk.sdk.config.SSLConfiguration;
 import io.snyk.sdk.interceptor.ServiceInterceptor;
-import okhttp3.OkHttpClient;
+import okhttp3.*;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -37,6 +40,9 @@ public class Snyk {
                                                              .readTimeout(DEFAULT_READ_TIMEOUT, MILLISECONDS)
                                                              .writeTimeout(DEFAULT_WRITE_TIMEOUT, MILLISECONDS);
 
+    // Do some proxy configuration - by default follows options set in JAVA_OPTS
+    configureProxy(builder);
+
     if (config.trustAllCertificates) {
       SSLContext sslContext = SSLContext.getInstance("TLS");
       TrustManager[] trustManagers = SSLConfiguration.buildUnsafeTrustManager();
@@ -59,6 +65,40 @@ public class Snyk {
                                      .baseUrl(config.baseUrl)
                                      .addConverterFactory(JacksonConverterFactory.create(objectMapper))
                                      .build();
+  }
+
+  private static void configureProxy(OkHttpClient.Builder builder) {
+    try {
+      String proxyHost = System.getProperty("http.proxyHost");
+      String proxyPort = System.getProperty("http.proxyPort");
+      String proxyUser = System.getProperty("http.proxyUser");
+      String proxyPassword = System.getProperty("http.proxyPassword");
+      // If proxy is set in our JAVA_OPTS then set it in OkHttp
+      if (proxyHost != null && proxyPort != null) {
+        InetSocketAddress proxyAddress = new InetSocketAddress(
+          System.getProperty("http.proxyHost"),
+          Integer.parseInt(System.getProperty("http.proxyPort"))
+        );
+        builder.proxy(new Proxy(Proxy.Type.HTTP, proxyAddress));
+      }
+
+      // If the proxy is authenticated, then set up an authentication handler
+      if (proxyUser != null && proxyPassword != null) {
+        Authenticator proxyAuthenticator = new Authenticator() {
+          @Override
+          public Request authenticate(Route route, Response response) throws IOException {
+            String credential = Credentials.basic(proxyUser, proxyPassword);
+            return response.request().newBuilder()
+              .header("Proxy-Authorization", credential)
+              .build();
+          }
+        };
+        builder.proxyAuthenticator(proxyAuthenticator);
+      }
+
+    } catch (Exception e) {
+      System.err.println("Error configuring proxy: " + e.getMessage());
+    }
   }
 
   public static Snyk newBuilder(Config config) throws Exception {
