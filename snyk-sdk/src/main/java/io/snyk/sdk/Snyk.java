@@ -41,7 +41,6 @@ public class Snyk {
                                                              .readTimeout(DEFAULT_READ_TIMEOUT, MILLISECONDS)
                                                              .writeTimeout(DEFAULT_WRITE_TIMEOUT, MILLISECONDS);
 
-    // Do some proxy configuration - by default follows options set in JAVA_OPTS
     configureProxy(builder, config);
 
     if (config.trustAllCertificates) {
