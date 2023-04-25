@@ -6,10 +6,12 @@ import java.util.Map;
 
 import org.sonatype.nexus.capability.CapabilitySupport;
 
+
 import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.API_TOKEN;
 
 @Named(SnykSecurityCapabilityDescriptor.CAPABILITY_ID)
 public class SnykSecurityCapability extends CapabilitySupport<SnykSecurityCapabilityConfiguration> {
+
 
   @Inject
   public SnykSecurityCapability() {

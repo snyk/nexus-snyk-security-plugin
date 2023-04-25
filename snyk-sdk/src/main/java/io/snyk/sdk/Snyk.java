@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.snyk.sdk.api.v1.SnykClient;
 import io.snyk.sdk.config.SSLConfiguration;
+import io.snyk.sdk.config.SnykProxyConfig;
 import io.snyk.sdk.interceptor.ServiceInterceptor;
 import okhttp3.*;
 import retrofit2.Retrofit;
@@ -41,7 +42,7 @@ public class Snyk {
                                                              .writeTimeout(DEFAULT_WRITE_TIMEOUT, MILLISECONDS);
 
     // Do some proxy configuration - by default follows options set in JAVA_OPTS
-    configureProxy(builder);
+    configureProxy(builder, config);
 
     if (config.trustAllCertificates) {
       SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -67,17 +68,17 @@ public class Snyk {
                                      .build();
   }
 
-  private static void configureProxy(OkHttpClient.Builder builder) {
+  private void configureProxy(OkHttpClient.Builder builder, Config config) {
     try {
-      String proxyHost = System.getProperty("http.proxyHost");
-      String proxyPort = System.getProperty("http.proxyPort");
-      String proxyUser = System.getProperty("http.proxyUser");
-      String proxyPassword = System.getProperty("http.proxyPassword");
-      // If proxy is set in our JAVA_OPTS then set it in OkHttp
-      if (proxyHost != null && proxyPort != null) {
+      String proxyHost = config.proxyConfig.getProxyHost();
+      int proxyPort = config.proxyConfig.getProxyPort();
+      String proxyUser = config.proxyConfig.getProxyUser();
+      String proxyPassword = config.proxyConfig.getProxyPassword();
+
+      if (proxyHost != null && proxyPort != 0) {
         InetSocketAddress proxyAddress = new InetSocketAddress(
-          System.getProperty("http.proxyHost"),
-          Integer.parseInt(System.getProperty("http.proxyPort"))
+          proxyHost,
+          proxyPort
         );
         builder.proxy(new Proxy(Proxy.Type.HTTP, proxyAddress));
       }
@@ -115,29 +116,35 @@ public class Snyk {
     String userAgent;
     boolean trustAllCertificates;
     String sslCertificatePath;
+    SnykProxyConfig proxyConfig;
 
     public Config(String token) {
-      this(DEFAULT_BASE_URL, token);
+      this(DEFAULT_BASE_URL, token, null);
     }
 
-    public Config(String baseUrl, String token) {
-      this(baseUrl, token, DEFAULT_USER_AGENT);
+    public Config(String token, SnykProxyConfig proxyConfig) {
+      this(DEFAULT_BASE_URL, token, proxyConfig);
     }
 
-    public Config(String baseUrl, String token, String userAgent) {
-      this(baseUrl, token, userAgent, false);
+    public Config(String baseUrl, String token, SnykProxyConfig proxyConfig) {
+      this(baseUrl, token, DEFAULT_USER_AGENT, proxyConfig);
     }
 
-    public Config(String baseUrl, String token, String userAgent, boolean trustAllCertificates) {
-      this(baseUrl, token, userAgent, trustAllCertificates, "");
+    public Config(String baseUrl, String token, String userAgent, SnykProxyConfig proxyConfig) {
+      this(baseUrl, token, userAgent, false, proxyConfig);
     }
 
-    public Config(String baseUrl, String token, String userAgent, boolean trustAllCertificates, String sslCertificatePath) {
+    public Config(String baseUrl, String token, String userAgent, boolean trustAllCertificates, SnykProxyConfig proxyConfig) {
+      this(baseUrl, token, userAgent, trustAllCertificates, "", proxyConfig);
+    }
+
+    public Config(String baseUrl, String token, String userAgent, boolean trustAllCertificates, String sslCertificatePath, SnykProxyConfig proxyConfig) {
       this.baseUrl = baseUrl;
       this.token = token;
       this.userAgent = userAgent;
       this.trustAllCertificates = trustAllCertificates;
       this.sslCertificatePath = sslCertificatePath;
+      this.proxyConfig = proxyConfig;
     }
   }
 }

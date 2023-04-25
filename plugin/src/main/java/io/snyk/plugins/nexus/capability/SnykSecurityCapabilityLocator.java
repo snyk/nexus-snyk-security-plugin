@@ -9,6 +9,9 @@ import org.sonatype.nexus.capability.Capability;
 import org.sonatype.nexus.capability.CapabilityReference;
 import org.sonatype.nexus.capability.CapabilityRegistry;
 
+import java.util.Optional;
+import java.util.Set;
+
 @Named
 public class SnykSecurityCapabilityLocator {
   private static final Logger LOG = LoggerFactory.getLogger(SnykSecurityCapabilityLocator.class);
