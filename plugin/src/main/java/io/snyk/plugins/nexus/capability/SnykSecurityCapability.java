@@ -10,7 +10,7 @@ import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.API_TOK
 
 @Named(SnykSecurityCapabilityDescriptor.CAPABILITY_ID)
 public class SnykSecurityCapability extends CapabilitySupport<SnykSecurityCapabilityConfiguration> {
-  
+
   @Inject
   public SnykSecurityCapability() {
   }
