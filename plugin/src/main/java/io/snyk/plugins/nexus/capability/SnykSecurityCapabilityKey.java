@@ -6,7 +6,11 @@ public enum SnykSecurityCapabilityKey {
   API_TRUST_ALL_CERTIFICATES("snyk.api.trust.all.certificates", "false"),
   ORGANIZATION_ID("snyk.organization.id", ""),
   VULNERABILITY_THRESHOLD("snyk.scanner.vulnerability.threshold", "low"),
-  LICENSE_THRESHOLD("snyk.scanner.license.threshold", "low");
+  LICENSE_THRESHOLD("snyk.scanner.license.threshold", "low"),
+  PROXY_HOST("snyk.proxy.host", ""),
+  PROXY_PORT("snyk.proxy.port", ""),
+  PROXY_USER("snyk.proxy.user", ""),
+  PROXY_PASSWORD("snyk.proxy.password", "");
 
   private final String propertyKey;
   private final String defaultValue;

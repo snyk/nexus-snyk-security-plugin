@@ -15,13 +15,9 @@ import org.sonatype.nexus.capability.Taggable;
 import org.sonatype.nexus.formfields.CheckboxFormField;
 import org.sonatype.nexus.formfields.FormField;
 import org.sonatype.nexus.formfields.StringTextFormField;
+import org.sonatype.nexus.formfields.PasswordFormField;
 
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.API_TOKEN;
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.API_TRUST_ALL_CERTIFICATES;
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.API_URL;
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.LICENSE_THRESHOLD;
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.ORGANIZATION_ID;
-import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.VULNERABILITY_THRESHOLD;
+import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.*;
 
 @Singleton
 @Named(SnykSecurityCapabilityDescriptor.CAPABILITY_ID)
@@ -36,6 +32,10 @@ public class SnykSecurityCapabilityDescriptor extends CapabilityDescriptorSuppor
   private final StringTextFormField fieldOrganizationId;
   private final StringTextFormField fieldVulnerabilityThreshold;
   private final StringTextFormField fieldLicenseThreshold;
+  private final StringTextFormField fieldProxyHost;
+  private final StringTextFormField fieldProxyPort;
+  private final StringTextFormField fieldProxyUser;
+  private final PasswordFormField fieldProxyPassword;
 
   public SnykSecurityCapabilityDescriptor() {
     fieldApiUrl = new StringTextFormField(API_URL.propertyKey(), "Snyk API URL", "", FormField.MANDATORY).withInitialValue(API_URL.defaultValue());
@@ -44,6 +44,10 @@ public class SnykSecurityCapabilityDescriptor extends CapabilityDescriptorSuppor
     fieldOrganizationId = new StringTextFormField(ORGANIZATION_ID.propertyKey(), "Snyk Organization ID", "", FormField.MANDATORY).withInitialValue(ORGANIZATION_ID.defaultValue());
     fieldVulnerabilityThreshold = new StringTextFormField(VULNERABILITY_THRESHOLD.propertyKey(), "Vulnerability Threshold", "", FormField.MANDATORY).withInitialValue(VULNERABILITY_THRESHOLD.defaultValue());
     fieldLicenseThreshold = new StringTextFormField(LICENSE_THRESHOLD.propertyKey(), "License Threshold", "", FormField.MANDATORY).withInitialValue(LICENSE_THRESHOLD.defaultValue());
+    fieldProxyHost = new StringTextFormField(PROXY_HOST.propertyKey(), "Proxy host (optional)", "", FormField.OPTIONAL).withInitialValue(PROXY_HOST.defaultValue());
+    fieldProxyPort = new StringTextFormField(PROXY_PORT.propertyKey(), "Proxy port (optional)", "", FormField.OPTIONAL).withInitialValue(PROXY_PORT.defaultValue());
+    fieldProxyUser = new StringTextFormField(PROXY_USER.propertyKey(), "Proxy username (optional)", "", FormField.OPTIONAL).withInitialValue(PROXY_USER.defaultValue());
+    fieldProxyPassword = new PasswordFormField(PROXY_PASSWORD.propertyKey(), "Proxy password (optional)", "", FormField.OPTIONAL).withInitialValue(PROXY_PASSWORD.defaultValue());
   }
 
   @Override
@@ -63,7 +67,7 @@ public class SnykSecurityCapabilityDescriptor extends CapabilityDescriptorSuppor
 
   @Override
   public List<FormField> formFields() {
-    return Arrays.asList(fieldApiUrl, fieldApiToken, fieldUseCustomSSLCertificate, fieldOrganizationId, fieldVulnerabilityThreshold, fieldLicenseThreshold);
+    return Arrays.asList(fieldApiUrl, fieldApiToken, fieldUseCustomSSLCertificate, fieldOrganizationId, fieldVulnerabilityThreshold, fieldLicenseThreshold, fieldProxyHost, fieldProxyPort, fieldProxyUser, fieldProxyPassword);
   }
 
   @Override
