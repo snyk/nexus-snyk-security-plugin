@@ -1,0 +1,320 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1009829"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:43.921Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1047324"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:46.791Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1048302"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:49.741Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1052449"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:52.724Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1052450"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:55.697Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1054588"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:24:58.390Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056414"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:01.277Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056416"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:04.661Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056417"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:07.904Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056418"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:11.553Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056419"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:14.400Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056420"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:17.526Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056421"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:20.497Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056424"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:23.576Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056425"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:26.971Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056426"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:30.086Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056427"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:32.796Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-1061931"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:40.826Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-174736"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:43.731Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-2421244"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:46.782Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038424"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:49.552Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038426"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:53.449Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:25:56.615Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-32044"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:00.122Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-32111"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:03.255Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-450207"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:06.525Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-450917"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:09.148Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-455617"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:12.181Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-467014"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:15.723Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-467015"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:18.751Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-467016"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:21.514Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-469674"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:24.255Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-469676"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:27.087Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-471943"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:31.230Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-472980"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:33.828Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-540500"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:36.681Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-548451"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:40.417Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-559094"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:43.840Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-559106"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:46.537Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-560762"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:49.348Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-560766"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:51.986Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-561362"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:54.567Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-561373"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:26:58.539Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-561585"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:07.556Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-561586"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:10.521Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-561587"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:13.843Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-564887"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:17.473Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-564888"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:21.008Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-570625"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:24.610Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-572300"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:27.347Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-572314"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:35.134Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-572316"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:38.345Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-608664"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:41.126Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72445"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:43.946Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72446"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:46.818Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72447"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:49.650Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72448"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:52.427Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72449"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:56.181Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72450"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:27:58.814Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72451"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:28:01.559Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72882"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:28:04.147Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72883"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:28:08.019Z
+  '"SNYK-JAVA-COMFASTERXMLJACKSONCORE-72884"':
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:28:10.933Z
+patch: {}
