@@ -44,13 +44,13 @@ public class Snyk {
     configureProxy(builder, config);
 
     if (config.trustAllCertificates) {
-      SSLContext sslContext = SSLContext.getInstance("TLS");
+      SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
       TrustManager[] trustManagers = SSLConfiguration.buildUnsafeTrustManager();
       sslContext.init(null, trustManagers, new SecureRandom());
       SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
       builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustManagers[0]);
     } else if (config.sslCertificatePath != null && !config.sslCertificatePath.isEmpty()) {
-      SSLContext sslContext = SSLContext.getInstance("TLS");
+      SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
       X509TrustManager trustManager = SSLConfiguration.buildCustomTrustManager(config.sslCertificatePath);
       sslContext.init(null, new TrustManager[]{trustManager}, null);
       SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
