@@ -38,15 +38,15 @@ it('can download a non-vulnerable package', async () => {
 
 it('throws when trying to download a vulnerable package', async () => {
   const url = buildNexusArtifactDownloadUrl(
-    'com.fasterxml.jackson.core',
-    'jackson-databind',
-    '2.6.5',
+    'org.xerial.snappy',
+    'snappy-java',
+    '1.0.3',
   );
 
   let capturedErr;
 
   try {
-    const res = await axios.get(url, {
+    await axios.get(url, {
       headers: {
         Authorization: `Basic ${nexusAuth}`,
       },
