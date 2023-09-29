@@ -1,6 +1,7 @@
 package io.snyk.plugins.nexus.scanner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
