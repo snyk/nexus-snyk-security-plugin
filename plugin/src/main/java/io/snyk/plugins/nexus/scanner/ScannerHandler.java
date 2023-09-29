@@ -1,6 +1,7 @@
 package io.snyk.plugins.nexus.scanner;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -35,8 +36,8 @@ public class ScannerHandler implements ContributedHandler {
 
   @Inject
   public ScannerHandler(final ConfigurationHelper configurationHelper,
-                        final MavenScanner mavenScanner,
-                        final NpmScanner npmScanner) {
+                        @Nullable final MavenScanner mavenScanner,
+                        @Nullable final NpmScanner npmScanner) {
     this.configurationHelper = configurationHelper;
     this.mavenScanner = mavenScanner;
     this.npmScanner = npmScanner;
@@ -64,10 +65,18 @@ public class ScannerHandler implements ContributedHandler {
     String repositoryFormat = repository.getFormat().getValue();
     switch (repositoryFormat) {
       case "maven2": {
+        if (mavenScanner == null) {
+          LOG.error("MavenScanner is not received. Cannot scan project.");
+          return response;
+        }
         scanResult = mavenScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
         break;
       }
       case "npm": {
+        if (npmScanner == null) {
+          LOG.error("NpmScanner is not received. Cannot scan project.");
+          return response;
+        }
         scanResult = npmScanner.scan(context, payload, snykClient, configuration.getOrganizationId());
         break;
       }

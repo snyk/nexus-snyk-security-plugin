@@ -2,6 +2,11 @@
 version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043:
+    - '*':
+        reason: Runtime dependency by nexus and not using polymorphic type handling
+        expires: 2024-09-28T00:00:00.000Z
+        created: 2023-09-28T13:45:02.731Z
   SNYK-JAVA-ORGECLIPSEJETTY-1090340:
     - '*':
       reason: Runtime dependency by Nexus and not using polymorphic type handling
