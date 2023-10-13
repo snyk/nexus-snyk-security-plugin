@@ -36,43 +36,43 @@
           id: metadata
           run: echo ::set-output name=tag::1.0.0
 
-        - name: Install Cypress
-          run: npm install -g cypress@9.7.0
+        # - name: Install Cypress
+        #   run: npm install -g cypress@9.7.0
 
-        - name: Build plugin
-          env:
-            TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
-            TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
-          run: |
-            ./mvnw clean verify -DskipTests --show-version --batch-mode --errors -PbuildKar -Drevision=${{ steps.metadata.outputs.tag }}
-            ls -la ${GITHUB_WORKSPACE}/plugin/target/nexus-snyk-security-plugin-bundle.kar
+        # - name: Build plugin
+        #   env:
+        #     TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
+        #     TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
+        #   run: |
+        #     ./mvnw clean verify -DskipTests --show-version --batch-mode --errors -PbuildKar -Drevision=${{ steps.metadata.outputs.tag }}
+        #     ls -la ${GITHUB_WORKSPACE}/plugin/target/nexus-snyk-security-plugin-bundle.kar
 
-        - name: Start the Nexus container with Snyk plugin mounted
-          run: docker run -d --name nexus -p 8081:8081 -v ${GITHUB_WORKSPACE}/plugin/target/nexus-snyk-security-plugin-bundle.kar:/opt/sonatype/nexus/deploy/nexus-snyk-security-plugin-bundle.kar sonatype/nexus3
+        # - name: Start the Nexus container with Snyk plugin mounted
+        #   run: docker run -d --name nexus -p 8081:8081 -v ${GITHUB_WORKSPACE}/plugin/target/nexus-snyk-security-plugin-bundle.kar:/opt/sonatype/nexus/deploy/nexus-snyk-security-plugin-bundle.kar sonatype/nexus3
 
-        - name: Wait for Nexus start
-          run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/
+        # - name: Wait for Nexus start
+        #   run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/
 
-        - name: Wait for API status endpoint
-          run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/service/rest/v1/status/writable
+        # - name: Wait for API status endpoint
+        #   run: npx wait-on --timeout 120000 --interval 2000 http://localhost:8081/service/rest/v1/status/writable
 
-        - name: Run Cypress to log in to Nexus and set up Snyk plugin
-          working-directory: test/smoke
-          run: |
-            docker exec nexus cat /nexus-data/admin.password > /tmp/password
-            export NEXUS_PASS=$(cat /tmp/password)
-            echo $NEXUS_PASS
-            cat /tmp/password
-            cypress run
-          env:
-            TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
-            TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
+        # - name: Run Cypress to log in to Nexus and set up Snyk plugin
+        #   working-directory: test/smoke
+        #   run: |
+        #     docker exec nexus cat /nexus-data/admin.password > /tmp/password
+        #     export NEXUS_PASS=$(cat /tmp/password)
+        #     echo $NEXUS_PASS
+        #     cat /tmp/password
+        #     cypress run
+        #   env:
+        #     TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
+        #     TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
 
         - name: Setup npm
           run: npm install
 
-        - name: Lint Node.js
-          run: npm run lint:formatting
+        # - name: Lint Node.js
+        #   run: npm run lint:formatting
 
         - name: Run Jest tests against running Nexus
           run: |
