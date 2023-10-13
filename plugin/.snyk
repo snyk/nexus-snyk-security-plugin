@@ -2,6 +2,11 @@
 version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+  SNYK-JAVA-ORGECLIPSEJETTY-5958847:
+    - '*':
+        reason: Runtime dependency by Nexus and no upgrade path available
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
   SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043:
     - '*':
         reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
