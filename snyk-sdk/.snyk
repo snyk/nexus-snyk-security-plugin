@@ -2,6 +2,36 @@
 version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMSQUAREUPOKIO-5773320:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMSQUAREUPOKHTTP3-2958044:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038424:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038426:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-450207:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
   SNYK-JAVA-COMFASTERXMLJACKSONCORE-450917:
     - '*':
         reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
@@ -28,11 +58,6 @@ ignore:
         expires: 2024-09-14T00:00:00.000Z
         created: 2023-09-14T13:43:42.175Z
   SNYK-JAVA-COMFASTERXMLJACKSONCORE-608664:
-    - '*':
-        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
-        expires: 2024-09-14T00:00:00.000Z
-        created: 2023-09-14T13:43:42.175Z
-  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043:
     - '*':
         reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
         expires: 2024-09-14T00:00:00.000Z
