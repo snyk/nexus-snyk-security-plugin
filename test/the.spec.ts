@@ -36,7 +36,7 @@ it('can download a non-vulnerable package', async () => {
   expect(res.status).toBe(200);
 });
 
-it.only('throws when trying to download a vulnerable package', async () => {
+it('throws when trying to download a vulnerable package', async () => {
   const url = buildNexusArtifactDownloadUrl(
     'com.fasterxml.jackson.core',
     'jackson-databind',
@@ -56,7 +56,5 @@ it.only('throws when trying to download a vulnerable package', async () => {
     capturedErr = err;
   }
 
-  console.log('****', 'res ****\n', JSON.stringify(res, null, 2), '\n');
-  console.log('****', 'capturedErr ****\n', JSON.stringify(capturedErr, null, 2), '\n');
   expect(capturedErr.response.status).toEqual(500);
 });

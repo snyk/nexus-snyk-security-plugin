@@ -17,7 +17,7 @@ describe("test", () => {
       "This wizard will help you complete required setup tasks."
     ).should("be.visible");
 
-		// Go through the mandatory wizard to set a new password (same as the old password)
+    // Go through the mandatory wizard to set a new password (same as the old password)
     cy.get("body").then(($body) => {
       if ($body.find('div[role="dialog"]').length) {
         cy.log("found the wizard");
@@ -82,12 +82,14 @@ describe("test", () => {
     cy.get('a[data-qtip="Server administration and configuration"]').click();
     cy.contains('td[role="gridcell"]', "System").click();
     cy.contains('div[role="option"]', "Capabilities").click();
+    cy.contains("Loading").should("not.be.visible");
     cy.contains('a[role="button"]', "Create capability").click();
     cy.contains("Loading").should("not.be.visible");
     cy.contains("Select Capability Type").should("be.visible");
     cy.contains("td:visible", "Snyk Security Configuration")
-      .should("be.visible")
-      .click();
+    .should("be.visible")
+    .click();
+    cy.contains("Loading").should("not.be.visible");
     cy.get('input[name="property_snyk.api.token"]')
       .should("be.visible")
       .type(Cypress.env("snykToken"));
