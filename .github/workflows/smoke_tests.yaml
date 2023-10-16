@@ -63,7 +63,7 @@ jobs:
           export NEXUS_PASS=$(cat /tmp/password)
           echo $NEXUS_PASS
           cat /tmp/password
-          cypress run --headless --browser chrome
+          cypress run
         env:
           TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
           TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
@@ -83,14 +83,14 @@ jobs:
         if: always()
         with:
           name: screenshots
-          path: /home/runner/work/nexus-snyk-security-plugin/nexus-snyk-security-plugin/test/smoke/cypress/screenshots/cypress-test.spec.js/
+          path: /home/runner/work/nexus-snyk-security-plugin/nexus-snyk-security-plugin/test/smoke/cypress/screenshots/cypress-test.cy.js/test
           retention-days: 1
 
       - uses: actions/upload-artifact@v2
         if: always()
         with:
           name: video
-          path: /home/runner/work/nexus-snyk-security-plugin/nexus-snyk-security-plugin/test/smoke/cypress/videos/cypress-test.spec.js.mp4
+          path: /home/runner/work/nexus-snyk-security-plugin/nexus-snyk-security-plugin/test/smoke/cypress/videos/cypress-test.cy.js.mp4
           retention-days: 1
 
       - name: Save docker logs to file

@@ -26,7 +26,8 @@ describe("test", () => {
           cy.log("in the diaglog callback");
           if ($dialog.find("a").length) {
             cy.log("found the Next button");
-            cy.wrap($dialog).should("be.visible").contains("Next").click();
+            // cy.wrap($dialog).should("be.visible").contains("Next").click();
+            cy.contains("Next").click();
             cy.log("clicked the Next button");
 
             // Set new password
@@ -56,12 +57,13 @@ describe("test", () => {
                 cy.log("found an anonymous access radio button");
                 cy.wrap($anonymous).get('div[role="radiogroup"] input').check();
                 cy.log("checked the first anonymous access radio buttong");
-                cy.contains(
-                  'div[role="dialog"] a[role="button"]:visible',
-                  "Next"
-                ).click();
-                cy.log("clicked the Next button");
               }
+
+              cy.contains(
+                'div[role="dialog"] a[role="button"]:visible',
+                "Next"
+              ).click();
+              cy.log("clicked the Next button");
             });
 
             // Finish
