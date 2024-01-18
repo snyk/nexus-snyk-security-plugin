@@ -44,9 +44,10 @@ it('throws when trying to download a vulnerable package', async () => {
   );
 
   let capturedErr;
+  let res;
 
   try {
-    const res = await axios.get(url, {
+    res = await axios.get(url, {
       headers: {
         Authorization: `Basic ${nexusAuth}`,
       },
