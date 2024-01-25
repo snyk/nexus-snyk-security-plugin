@@ -1,0 +1,331 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32043:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMSQUAREUPOKIO-5773320:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMSQUAREUPOKHTTP3-2958044:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038424:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-3038426:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-450207:
+    - '*':
+        reason: No upgrade path until retrofit updates version 2.9.0 to use a newer jackson
+        expires: 2024-01-11T00:00:00.000Z
+        created: 2023-10-11T11:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-450917:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-467015:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056420:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1054588:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056416:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-608664:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-548451:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056421:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056426:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056427:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-174736:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056418:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-559094:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-559106:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-560762:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-561585:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72882:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72883:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72884:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056419:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1009829:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1047324:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056414:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056417:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-572314:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-572316:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72445:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72446:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72447:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72448:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-560766:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-561362:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-467016:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056424:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1056425:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72449:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72450:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-72451:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-561373:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-561586:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-561587:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-564887:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-564888:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-570625:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-572300:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1048302:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1052449:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1052450:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32044:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-32111:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-455617:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-467014:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-469674:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-469676:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-471943:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-472980:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-540500:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-1061931:
+    - '*':
+        reason: Not using polymorphic type handling - https://docs.snyk.io/manage-issues/priorities-for-fixing-issues/triage-for-issues#assessment-of-jackson-vulnerable-conditions
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-2421244:
+    - '*':
+        reason: No nested objects
+        expires: 2024-09-14T00:00:00.000Z
+        created: 2023-09-14T13:43:42.175Z
+
+patch: {}
