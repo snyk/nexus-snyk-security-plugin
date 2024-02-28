@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  prodsec: snyk/prodsec-orb@1.0
+  prodsec: snyk/prodsec-orb@1
 
 jobs:
   build:
@@ -63,9 +63,16 @@ jobs:
             go get github.com/aktau/github-release
             github-release upload --security-token $GH_TOKEN --user ${CIRCLE_PROJECT_USERNAME} --repo ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_TAG} --name nexus-snyk-security-plugin-bundle.kar --file ./plugin/target/nexus-snyk-security-plugin-bundle.kar
 
+  security-scans:
+    resource_class: small
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - prodsec/security_scans:
+          mode: auto
 
 workflows:
-  version: 2
   build-and-deploy:
     jobs:
       - prodsec/secrets-scan:
@@ -73,6 +80,10 @@ workflows:
           context:
             - snyk-bot-slack
           channel: cli-alerts
+    
+      - security-scans:
+          context: devex_cli
+
       - build:
           filters:
             tags:
