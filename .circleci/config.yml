@@ -71,6 +71,7 @@ jobs:
       - checkout
       - prodsec/security_scans:
           mode: auto
+          release-branch: master
 
 workflows:
   build-and-deploy:
@@ -80,7 +81,7 @@ workflows:
           context:
             - snyk-bot-slack
           channel: cli-alerts
-    
+
       - security-scans:
           context: devex_cli
 
