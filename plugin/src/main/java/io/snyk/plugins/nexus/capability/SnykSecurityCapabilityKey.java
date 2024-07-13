@@ -1,7 +1,7 @@
 package io.snyk.plugins.nexus.capability;
 
 public enum SnykSecurityCapabilityKey {
-  API_URL("snyk.api.url", "https://snyk.io/api/v1/"),
+  API_URL("snyk.api.url", "https://api.snyk.io/v1/"),
   API_TOKEN("snyk.api.token", ""),
   API_TRUST_ALL_CERTIFICATES("snyk.api.trust.all.certificates", "false"),
   ORGANIZATION_ID("snyk.organization.id", ""),
