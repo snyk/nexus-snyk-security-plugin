@@ -32,7 +32,7 @@
     -->
     <version.jsr305.annotations>3.0.2</version.jsr305.annotations>
     <version.junit5>5.4.2</version.junit5>
-    <version.retrofit2>2.9.0</version.retrofit2>
+    <version.retrofit2>2.10.0</version.retrofit2>
   </properties>
 
   <build>
