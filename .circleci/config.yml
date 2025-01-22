@@ -3,10 +3,13 @@ version: 2.1
 orbs:
   prodsec: snyk/prodsec-orb@1
 
-jobs:
-  build:
+defaults: &java
     docker:
       - image: circleci/openjdk:8-jdk
+
+jobs:
+  build:
+    <<: *java
     working_directory: ~/nexus-snyk-security-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
@@ -26,8 +29,7 @@ jobs:
           key: maven-dependencies-{{ checksum "pom.xml" }}
 
   release:
-    docker:
-      - image: circleci/openjdk:8-jdk
+    <<: *java
     working_directory: ~/nexus-snyk-security-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
@@ -64,9 +66,8 @@ jobs:
             github-release upload --security-token $GH_TOKEN --user ${CIRCLE_PROJECT_USERNAME} --repo ${CIRCLE_PROJECT_REPONAME} --tag ${CIRCLE_TAG} --name nexus-snyk-security-plugin-bundle.kar --file ./plugin/target/nexus-snyk-security-plugin-bundle.kar
 
   security-scans:
+    <<: *java
     resource_class: small
-    docker:
-      - image: cimg/base:stable
     steps:
       - checkout
       - prodsec/security_scans:
