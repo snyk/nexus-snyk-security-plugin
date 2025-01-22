@@ -4,14 +4,12 @@ orbs:
   prodsec: snyk/prodsec-orb@1
 
 defaults: &java
-    resource_class: small
     docker:
-      - image: cimg/openjdk:17.0
+      - image: circleci/openjdk:8-jdk
 
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:8-jdk
+    <<: *java
     working_directory: ~/nexus-snyk-security-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
@@ -31,8 +29,7 @@ jobs:
           key: maven-dependencies-{{ checksum "pom.xml" }}
 
   release:
-    docker:
-      - image: circleci/openjdk:8-jdk
+    <<: *java
     working_directory: ~/nexus-snyk-security-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
@@ -70,6 +67,7 @@ jobs:
 
   security-scans:
     <<: *java
+    resource_class: small
     steps:
       - checkout
       - prodsec/security_scans:
