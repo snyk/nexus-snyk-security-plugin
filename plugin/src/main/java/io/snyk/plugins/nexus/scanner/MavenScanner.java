@@ -6,6 +6,7 @@ import javax.inject.Named;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.AbstractModule;
 import io.snyk.plugins.nexus.model.ScanResult;
 import io.snyk.sdk.api.v1.SnykClient;
 import io.snyk.sdk.model.Severity;
@@ -29,7 +30,12 @@ import static io.snyk.sdk.util.Formatter.getIssuesAsFormattedString;
 import static io.snyk.sdk.util.Formatter.getLicenseIssuesAsFormattedString;
 
 @Named
-public class MavenScanner {
+public class MavenScanner extends AbstractModule {
+  @Override
+  protected void configure() {
+    bind(MavenScanner.class);
+  }
+
   private static final Logger LOG = LoggerFactory.getLogger(MavenScanner.class);
 
   private final AssetStore assetStore;

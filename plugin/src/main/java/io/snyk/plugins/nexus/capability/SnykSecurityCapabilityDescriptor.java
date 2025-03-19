@@ -16,10 +16,12 @@ import org.sonatype.nexus.formfields.CheckboxFormField;
 import org.sonatype.nexus.formfields.FormField;
 import org.sonatype.nexus.formfields.StringTextFormField;
 import org.sonatype.nexus.formfields.PasswordFormField;
+import org.sonatype.nexus.common.upgrade.AvailabilityVersion;
 
 import static io.snyk.plugins.nexus.capability.SnykSecurityCapabilityKey.*;
 
 @Singleton
+@AvailabilityVersion(from = "1.0")
 @Named(SnykSecurityCapabilityDescriptor.CAPABILITY_ID)
 public class SnykSecurityCapabilityDescriptor extends CapabilityDescriptorSupport<SnykSecurityCapabilityConfiguration> implements Taggable {
   static final String CAPABILITY_ID = "snyk.security";
