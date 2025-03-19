@@ -1,12 +1,9 @@
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
+module.exports = {
   defaultCommandTimeout: 10000,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    supportFile: './cypress/support/e2e.js',
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+      return require('./cypress/plugins/index.js')(on, config);
     },
   },
-})
+};
