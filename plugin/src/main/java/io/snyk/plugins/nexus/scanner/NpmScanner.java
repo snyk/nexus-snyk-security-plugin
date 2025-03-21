@@ -6,6 +6,7 @@ import javax.inject.Named;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.AbstractModule;
 import io.snyk.plugins.nexus.model.ScanResult;
 import io.snyk.sdk.api.v1.SnykClient;
 import io.snyk.sdk.model.Severity;
@@ -26,7 +27,12 @@ import static io.snyk.plugins.nexus.util.Formatter.getIssuesCountBySeverity;
 import static io.snyk.sdk.util.Formatter.getIssuesAsFormattedString;
 
 @Named
-public class NpmScanner {
+public class NpmScanner extends AbstractModule {
+  @Override
+  protected void configure() {
+    bind(NpmScanner.class);
+  }
+
   private static final Logger LOG = LoggerFactory.getLogger(NpmScanner.class);
 
   private final AssetStore assetStore;

@@ -46,6 +46,8 @@ describe("test", () => {
                   "Next"
                 ).click();
                 cy.log("clicked the Next button");
+              } else {
+                cy.log('no password text boxes');
               }
             });
 
@@ -54,10 +56,10 @@ describe("test", () => {
               cy.log("in the anonymous access callback");
               if ($anonymous.find('input[type="radio"]').length) {
                 cy.log("found an anonymous access radio button");
-                cy.wrap($anonymous).get('div[role="radiogroup"] input').check();
-                cy.log("checked the first anonymous access radio buttong");
+                cy.wrap($anonymous).get('input[type="radio"]').first().check();
+                cy.log("checked the first anonymous access radio button");
                 cy.contains(
-                  'div[role="dialog"] a[role="button"]:visible',
+                  'div[role="presentation"] a[role="button"]:visible',
                   "Next"
                 ).click();
                 cy.log("clicked the Next button");
@@ -78,10 +80,20 @@ describe("test", () => {
       }
     });
 
+    // dismiss the data collection banner
+    cy.get("#panel-1154-innerCt").should("exist").then((button) => {
+      if (button.length > 0) {
+        cy.wrap(button).click();
+      } else {
+        cy.log("could not find the dismiss data collection button");
+      }
+    })
+
     // Add Capability
     cy.get('a[data-qtip="Server administration and configuration"]').click();
     cy.contains('td[role="gridcell"]', "System").click();
     cy.contains('div[role="option"]', "Capabilities").click();
+    cy.contains("Loading").should("not.be.visible");
     cy.contains('a[role="button"]', "Create capability").click();
     cy.contains("Loading").should("not.be.visible");
     cy.contains("Select Capability Type").should("be.visible");

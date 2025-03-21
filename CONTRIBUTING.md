@@ -34,13 +34,13 @@ docker exec -it nexus cat /nexus-data/admin.password
 1. Pull the Maven Docker image:
 
 ```bash
-docker pull maven:3.6.3-openjdk-8
+docker pull maven:3.9.9-eclipse-temurin-17
 ```
 
-2. Run a Maven container:
+2. Run a Maven container and mount the project:
 
 ```bash
-docker run -it --name maven maven:3.6.3-openjdk-8 bash
+docker run -it --name maven maven:3.9.9-eclipse-temurin-17 -v /path/to/nexus-snyk-security-plugin:/usr/src/nexus-snyk-security-plugin -w /usr/src/nexus-snyk-security-plugin bash
 ```
 
 3. Inside the container, you can use Maven commands to build your project.
