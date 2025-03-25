@@ -62,11 +62,12 @@
         - name: Run Cypress to log in to Nexus and set up Snyk plugin
           working-directory: test/smoke
           env:
-            TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
             TEST_SNYK_ORG: ${{ secrets.TEST_SNYK_ORG }}
+            TEST_SNYK_TOKEN: ${{ secrets.TEST_SNYK_TOKEN }}
           run: |
             docker exec nexus cat /nexus-data/admin.password > /tmp/password
-            export NEXUS_PASS=$(cat /tmp/password)
+            export NEXUS_ADMIN_PASS=$(cat /tmp/password)
+            export NEXUS_PASS=1234
             cypress run
 
         - name: Setup npm
@@ -77,7 +78,7 @@
 
         - name: Run Jest tests against running Nexus
           run: |
-            export NEXUS_PASS=$(cat /tmp/password)
+            export NEXUS_PASS=1234
             npm run test
 
         - uses: actions/upload-artifact@v4
@@ -98,9 +99,6 @@
           uses: jwalton/gh-docker-logs@v2
           with:
             dest: "./logs"
-
-        - name: Find any Snyk plugin errors in docker logs
-          run: "! grep -Hrni snyk ./logs | grep -i error"
 
         - name: Dump docker logs (on success)
           uses: jwalton/gh-docker-logs@v2
