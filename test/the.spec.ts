@@ -43,17 +43,11 @@ it('throws when trying to download a vulnerable package', async () => {
     '2.6.5',
   );
 
-  let capturedErr;
-
-  try {
-    const res = await axios.get(url, {
+  await expect(async () => {
+    await axios.get(url, {
       headers: {
         Authorization: `Basic ${nexusAuth}`,
       },
     });
-  } catch (err) {
-    capturedErr = err;
-  }
-
-  expect(capturedErr.response.status).toEqual(500);
+  }).rejects.toThrow('Request failed with status code 500');
 });
